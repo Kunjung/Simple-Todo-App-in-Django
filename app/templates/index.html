@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>To Do</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+        
+        <h1>What U Do Today?</h1>
+        <form action="{% url 'add' %}" method="POST">
+        	{% csrf_token %}
+        	{{form.text}}
+        	<button>Add</button>
+        </form>
+        <a href="{% url 'deleteCompleted' %}"><button>Delete Completed</button></a>
+        <a href="{% url 'deleteAll' %}"><button>Delete All</button></a>
+        <p>Todos</p>
+        <ul>
+        	{% for todo in todos %}
+        		{% if todo.complete %}
+        			<li><strike>{{ todo.text }}</strike></li>
+        		{% else %}
+        			<li><a href="{% url 'complete' todo.id %}">{{ todo.text }}</a></li>
+        		{% endif %}
+        	{% endfor %}
+     	</ul>
+       
+    </body>
+</html>
